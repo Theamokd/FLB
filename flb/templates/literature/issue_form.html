@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<h3 class="mt-3">Create/update the issue:</h3>
+ {% crispy form %}
+
+{% endblock content %}

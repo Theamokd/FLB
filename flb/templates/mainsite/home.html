@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="container-fluid bg-image mb-4" style="
+      background-image: url('{% static 'images/mainsite/hero.jpg' %}');
+      height: 50vh;">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-7 py-2 align-self-center bg-light rounded opacity-90  border border-success" id="hero-search">
+            <h4>Norway's literature about birds</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, dolorem?</p>
+            {% comment %} <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search for authors, titles or keywords">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+      </form> {% endcomment %}
+{% crispy form %}
+
+        </div>
+      </div>
+</div>
+
+<div class="container">
+    <div class="row gx-5">
+        <div class="col-md-4">
+
+        <div class="card mb-3 border-success">
+            <h4 class="card-header text-center">Siste utgaver </h4>
+
+            <div class="list-group list-group-flush">
+                {% for issue in issues %}
+                <a href="{% url 'literature:issue-detail' issue.slug %} " class="list-group-item list-group-item-action flex-column align-items-start py-4">
+                    <p class="text-end mb-1"><small> {{issue.created_at |timesince}} ago </small></p>
+
+                    <div class="card">
+                    {% if issue.f_cover %}
+                            <img src=" {{issue.f_cover.url}} " alt="Issue cover" class="card-img-top">
+                        {% else %}
+                            <img src="{% static 'img/default-issue.png' %}" alt="Issue cover" class="icard-img-top">
+                        {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-subtitle"> {{issue.journal.name}} </h5>
+                            <p class="card-text"> {{issue.name}} </p>
+                    </div>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </div>
+        </div>
+</div>
+
+
+        <div class="col-md-4">
+<div class="card mb-3 border-success">
+  <h4 class="card-header text-center">Siste artikler</h4>
+
+            <div class="list-group list-group-flush">
+            {% for article in articles %}
+            <a href="{% url 'literature:article-detail' article.slug %} " class="list-group-item list-group-item-action flex-column align-items-start py-4">
+                <p class="text-end mb-1"><small> {{article.created_at |timesince}} ago </small></p>
+                <h5 class="mb-1"> {{article.name}} </h5>
+                <p class="mb-1"> {{article.text |truncatewords:50}} </p>
+                <small>
+                    {% for author in article.authors.all %}
+                        {{author.name}}
+                        {% if author == article.authors.all.last %}.{% else %},&nbsp {% endif %}
+                    {% endfor %}
+                </small>
+            </a>
+            {% endfor %}
+            </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 ">
+            <div class="card mb-3 border-success">
+  <h4 class="card-header text-center">Siste nytt</h4>
+
+            <div class="list-group list-group-flush">
+
+            {% for post in posts %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start py-4">
+                <p class="text-end mb-1"><small>{{post.created_at |timesince}} ago</small></p>
+                <h5 class="mb-2">{{post.name}} </h5>
+                <img src="{{post.image.url}}" alt="Journal image" class="img-fluid w-100 mb-2">
+                <p class="mb-1">{{post.text |truncatewords:50}}</p>
+                <small> {{post.author}} </small>
+            </a>
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

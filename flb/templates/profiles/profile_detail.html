@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Your profile {% endblock title %}
+
+{% block content %}
+
+<div class="row">
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item active">Your profile page</li>
+    </ol>
+</div>
+
+
+<div class="row align-items-end my-3 border border-success py-3 bg-white shadow-sm">
+    <div class="col-md-2">
+        <img class="img-fluid" src="
+        {% if object.avatar %}
+            {{ object.avatar.url }}
+        {% else %}
+            {% static 'img/default-profile.png' %}
+        {% endif %}"
+         alt="profile avatar">
+    </div>
+    <div class="col-md-10">
+        <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+        <p class=""><small class="text-muted">Joining date: {{object.created}} </small></p>
+        <a href="{% url 'profiles:profile-update' object.pk %}">
+            <button type="button" class="btn btn-secondary">Change your profile info</button>
+        </a>
+        <a href="{% url 'account_email' %}">
+            <button type="button" class="btn btn-warning">Change your email</button>
+        </a>
+        <a href="{% url 'account_change_password' %}">
+            <button type="button" class="btn btn-warning">Change your password</button>
+        </a>
+
+    </div>
+
+    <div class="col-md-12 mt-4">
+        <h5>You are editor for these journals:</h5>
+            <ul>
+                {% for journal in journals %}
+                    <li> <strong><a href="{% url 'literature:journal-detail' journal.slug %}" style="color: black;">{{journal.name}}</a></strong></li>
+
+                {% empty %}
+                    <p>No journal yet</p>
+                {% endfor %}
+            </ul>
+
+    </div>
+</div>
+
+
+
+{% endblock content %}

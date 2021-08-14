@@ -1,10 +1,11 @@
-
-@import "custom_bootstrap_vars";
-@import "bootstrap";
-
+// Your variable  overrides can go here, e.g.:
+// $h1-font-size: 3rem;
 
 
 
+@import "variables";
+@import "bootstrap/bootstrap";
+@import "bootswatch";
 // project specific CSS goes here
 
 ////////////////////////////////
@@ -38,3 +39,5 @@ $red: #b94a48;
   border-color: $dark-pink;
   color: $red;
 }
+
+body { padding-top: 70px; }

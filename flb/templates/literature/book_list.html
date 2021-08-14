@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+
+
+
+<div class="row">
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item"><a href="{% url 'mainsite:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Books</li>
+    </ol>
+</div>
+
+
+
+<div class="row px-0">
+    <div class="col"></div>
+        <h3>Books</h3>
+        {% for book in page_obj %}
+            <div class="card shadow-sm my-2">
+                <div class="card-body">
+                    <a href="{% url 'literature:book-detail' book.slug %}"><h4 class="card-title"> {{book.name}} </h4></a>
+                    <p class="card-subtitle text-muted small mb-3">
+                        {% for a in book.authors.all %}
+                            {% if not forloop.last %}
+                                {{a.name}},
+                            {% else %}
+                                {{a.name}}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p class="card-text">
+                        {{book.desc}}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="pagination d-flex justify-content-center mt-3">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}{% endblock scripts %}

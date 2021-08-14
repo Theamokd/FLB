@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+
+{% block title %}Create author{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header">
+            Create author
+        </div>
+        <div class="card-body">
+             {% crispy form %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+
+window.onunload = refreshParent;
+    function refreshParent() {
+        window.opener.location.reload();
+    }
+
+
+</script>
+
+{% endblock scripts %}

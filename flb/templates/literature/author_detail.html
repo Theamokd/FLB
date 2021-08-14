@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{% endblock %}
+
+
+
+{% block content %}
+
+    <h1>{{ object.name }}</h1>
+
+    <a href="{% url 'literature:author-delete' object.pk %}"><button class="btn btn-danger ">Delete</button></a>
+
+    <p>{{ object.desc }}</p>
+
+    {% for article in articles %}
+        <p> {{article.name}} </p>
+    {% endfor %}
+
+
+    <p>Date: {{ now|date }}</p>
+{% endblock content %}
+
+
+{% block scripts %}{% endblock scripts %}

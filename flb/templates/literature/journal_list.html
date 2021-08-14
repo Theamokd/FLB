@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<div class="row">
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item"><a href="{% url 'mainsite:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Journal list</li>
+    </ol>
+</div>
+
+<div class="row">
+    <h3 class="display-6" >Journals</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur voluptates similique, animi quia, cumque tempora quam corporis nostrum veritatis fugit necessitatibus laboriosam odio doloribus deleniti iure quasi dolor est ex quae illo ipsum. Tempore exercitationem possimus odit, ipsam molestiae praesentium eveniet voluptate nam, fugit corrupti magni, velit dolorum esse aliquam.</p>
+</div>
+
+
+
+<div class="row">
+    {% for journal in object_list %}
+        <div class="col-md-2">
+            <div class="card border-success mb-3 shadow-sm">
+                <div class="card-header">{{ journal.name }}</div>
+                <div class="card-body">
+                    <a href="{% url 'literature:journal-detail' journal.slug %} ">
+                        <img class="img-fluid" src="{{ journal.f_cover.url }}" alt="journal cover">
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No journals yet.</p>
+    {% endfor %}
+</div>
+{% comment %} <div class="pagination d-flex justify-content-center mt-2">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div> {% endcomment %}
+{% endblock content %}
+
+
+{% block scripts %}{% endblock scripts %}

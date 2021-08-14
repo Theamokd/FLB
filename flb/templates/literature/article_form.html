@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% comment %} Needed for select2 {% endcomment %}
+{{ form.media.css }}
+
+
+
+{% block title %}Create article{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Create article
+        </div>
+        <div class="card-body">
+             {% crispy form %}
+        </div>
+    </div>
+</div>
+
+
+{% comment %} The scrips for select 2 {% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{ form.media.js }}
+
+{% endblock content %}
+
+{% block inline_javascript %}
+
+    <script language="javascript">
+
+        {% comment %} Pop up for creating another author {% endcomment %}
+        const addAuthor = document.getElementById('add-author');
+        const authorCreateUrl = "{% url 'literature:author-create' %}";
+
+
+        addAuthorPopUp = () => {
+            window.open(authorCreateUrl, "popup", 'width=600,height=600');
+            return false;
+        }
+        addAuthor.addEventListener('click', addAuthorPopUp)
+
+        //Copy insert image tag functionality
+        const imgNumber = document.getElementById('id_article_image_set-TOTAL_FORMS').value
+
+        for (let i =0; i < imgNumber-1; i++) {
+
+            const imgDiv = document.getElementById(`div_id_article_image_set-${i}-img`)
+
+            // find the button element and add functionality
+
+            const copyButton = document.querySelector(`#copy-svg-article_image_set-${i} > svg`)
+
+            copyButton.onclick = function () {
+                const imgSource = document.querySelector(`#div_id_article_image_set-${i}-img > a`).innerHTML
+                const imgAuthor = document.querySelector(`#div_id_article_image_set-${i}-photo_by > input`).value
+                const imgTitle = document.querySelector(`#div_id_article_image_set-${i}-name > input`).value
+                const imgText = document.querySelector(`#div_id_article_image_set-${i}-desc > input`).value
+
+                let imgClip = `<figure class="inline-figure"><img src="/media/${imgSource}" class="figure-img img-fluid rounded" alt="art image"><figcaption class="figure-caption blockquote-footer"><b>${imgTitle}</b>${imgText}<cite>photo by ${imgAuthor} </cite></figcaption></figure>`
+
+                //Require to create some dummy element
+                var dummy = document.createElement("textarea")
+                document.body.appendChild(dummy)
+                dummy.value = imgClip;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+
+                copyButton.setAttribute('class', 'bi bi-clipboard-check')
+                copyButton.innerHTML = '<path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>  <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>'
+            }
+        }
+
+    </script>
+
+
+
+{% endblock inline_javascript %}

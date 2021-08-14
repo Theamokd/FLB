@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+<div class="row">
+    <h1 >Articles</h1>
+
+    <form method="get">
+        {% for field in filtered_articles.form %}
+        <div class="col-2">
+            {{ field|as_crispy_field }}
+        </div>
+        {% endfor %}
+        <input type="submit" />
+    </form>
+</div>
+
+<div class="row">
+    <h5>Filtered</h5>
+    {% for article in filtered_articles.qs %}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    {{article.name}}
+                </div>
+                <div class="card-body">
+                    {{article.abstract}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+{% endblock content %}
+
+
+{% block scripts %}{% endblock scripts %}

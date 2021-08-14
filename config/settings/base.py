@@ -68,11 +68,19 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    # My stuff
+    "taggit",
+    "django_select2",
+    "django_filters",
 ]
 
 LOCAL_APPS = [
     "flb.users.apps.UsersConfig",
     # Your stuff: custom apps go here
+    "fuglelittbase.mainsite.apps.MainsiteConfig",
+    "fuglelittbase.literature.apps.LiteratureConfig",
+    "fuglelittbase.profiles.apps.ProfilesConfig",
+    "fuglelittbase.posts.apps.PostsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -267,3 +275,5 @@ SOCIALACCOUNT_ADAPTER = "flb.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+TAGGIT_CASE_INSENSITIVE = True
+SELECT2_CACHE_BACKEND = "default"

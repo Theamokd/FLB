@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load search_extras %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+<div class="row">
+    <div class="col-md-2 navbar navbar-expand-md navbar-light bg-light d-flex flex-column justify-content-start align-items-start">
+        <h5>Filters results</h5>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse overflow-auto" id="navbarSupportedContent">
+            <ul class="nav h-100 d-flex flex-column justify-content-start align-items-start">
+
+            <li class="nav-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#journals-collapse" aria-expanded="false">
+                    Journals
+                </button>
+
+                {% if get_journals|length > 0 %}
+                    <a href="{% del_from_url 'journals' %}">[X]</a>
+                {% endif %}
+
+                <div class="collapse" id="journals-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        {% for journal in journals %}
+                            <li><a href="{% add_to_url 'journals' journal %}" class="link-dark rounded">{{journal}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#authors-collapse" aria-expanded="false">
+                    Authors
+                </button>
+
+                {% if get_authors|length > 0 %}
+                    <a href="{% del_from_url 'authors' %}">[X]</a>
+                {% endif %}
+
+                <div class="collapse" id="authors-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        {% for author in authors %}
+                            <li><a href="{% add_to_url 'authors' author %}" class="link-dark rounded">{{author}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#years-collapse" aria-expanded="false">
+                    Years
+                </button>
+
+                {% if get_years|length > 0 %}
+                    <a href="{% del_from_url 'years' %}">[X]</a>
+                {% endif %}
+
+                <div class="collapse" id="years-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        {% for year in years %}
+                            <li><a href="{% add_to_url 'years' year %}" class="link-dark rounded">{{year}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#books-collapse" aria-expanded="false">
+                    Tags
+                </button>
+
+                {% if get_tags|length > 0 %}
+                    <a href="{% del_from_url 'tags' %}">[X]</a>
+                {% endif %}
+
+                <div class="collapse" id="books-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        {% for tag in tags %}
+                            <li><a href="{% add_to_url 'tags' tag %}" class="link-dark rounded">{{tag}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-10">
+
+        {% crispy form %}
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#articles-tab">
+                Articles<span class="badge rounded-pill bg-dark ms-2">{{articles_count}}</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#books-tab">
+                Books<span class="badge rounded-pill bg-dark ms-2">{{books_count}}</span></a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content bg-light pt-3">
+
+            <div class="tab-pane fade show active" id="articles-tab">
+
+                {% for article in paged_articles %}
+                    <div class="card m-2">
+                        <div class="card-body">
+                            <a href="{% url 'literature:article-detail' article.slug %}"><h4 class="card-title"> {{article.name}} </h4></a>
+                            <p class="card-subtitle text-muted small mb-3">
+                            <span class="badge bg-light"> {{ article.issue.journal.name }} - {{ article.issue.date.year }} </span> -
+                                {% for a in article.authors.all %}
+                                    {% if not forloop.last %}
+                                        {{a.name}},
+                                    {% else %}
+                                        {{a.name}}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">
+                                {{article.abstract|truncatewords:50}}
+                            </p>
+                            {% for tag in article.tags.all %}
+                                {% if not forloop.last %}
+                                    <a href="{% add_to_url 'tags' tag.name %}" class="small"><i>{{tag.name}},</i></a>
+                                {% else %}
+                                    <a href="{% add_to_url 'tags' tag.name %}" class="small"><i>{{tag.name}}</i></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if paged_articles.has_previous %}
+                            <a href="{% add_replace_to_url 'a-page' 1 %}">&laquo; first</a>
+                            <a href="{% add_replace_to_url 'a-page' paged_articles.previous_page_number %}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ paged_articles.number }} of {{ paged_articles.paginator.num_pages }}.
+                        </span>
+
+                        {% if paged_articles.has_next %}
+                            <a href="{% add_replace_to_url 'a-page' paged_articles.next_page_number %}">next</a>
+                            <a href="{% add_replace_to_url 'a-page' paged_articles.paginator.num_pages %}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="books-tab">
+                {% for book in paged_books %}
+                    <div class="card m-2">
+                        <div class="card-body">
+                            <a href="#"><h4 class="card-title"> {{book.name}} </h4></a>
+                            <p class="card-subtitle text-muted small mb-3">
+                                {% for a in book.authors.all %}
+                                    {% if not forloop.last %}
+                                        {{a.name}},
+                                    {% else %}
+                                        {{a.name}}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                            <p class="card-text">
+                                {{book.desc|truncatewords:50}}
+                            </p>
+                            {% for tag in book.tags.all %}
+                                {% if not forloop.last %}
+                                    <a href="{% add_to_url 'tags' tag.name %}" class="small"><i>{{tag.name}},</i></a>
+                                {% else %}
+                                    <a href="{% add_to_url 'tags' tag.name %}" class="small"><i>{{tag.name}}</i></a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if paged_books.has_previous %}
+                            <a href="{% add_replace_to_url 'b-page' 1 %}">&laquo; first</a>
+                            <a href="{% add_replace_to_url 'b-page' paged_books.previous_page_number %}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ paged_books.number }} of {{ paged_books.paginator.num_pages }}.
+                        </span>
+
+                        {% if paged_books.has_next %}
+                            <a href="{% add_replace_to_url 'b-page' paged_books.next_page_number %}">next</a>
+                            <a href="{% add_replace_to_url 'b-page' paged_books.paginator.num_pages %}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+{% endblock content %}

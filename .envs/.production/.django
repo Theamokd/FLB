@@ -13,7 +13,7 @@ DJANGO_SECURE_SSL_REDIRECT=False
 
 # Email
 # ------------------------------------------------------------------------------
-DJANGO_SERVER_EMAIL=damocdorin@gmaol.com
+DJANGO_SERVER_EMAIL=damocdorin@gmail.com
 
 
 # AWS

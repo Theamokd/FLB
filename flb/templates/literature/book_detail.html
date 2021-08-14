@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} {{object.name}} {% endblock title %}
+
+{% block content %}
+
+<div class="row">
+<div class="col">
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item"><a href="{% url 'mainsite:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'literature:book-list' %}">Books</a></li>
+        <li class="breadcrumb-item active">{{ object.name | truncatewords:5 }}</li>
+    </ol>
+</div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{object.name}}</h4>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {% for author in object.authors.all %}
+                        {{author.name}}
+                        {% if author == object.authors.all.last %}.{% else %}, {% endif %}
+                    {% endfor %}
+                </h6>
+                <p class="card-text">{{object.desc}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}
