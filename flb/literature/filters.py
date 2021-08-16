@@ -1,6 +1,7 @@
 import django_filters
-from fuglelittbase.literature.models import Article, Author, Issue, Journal
 from taggit.models import Tag
+
+from flb.literature.models import Article, Author, Issue, Journal
 
 
 class IssueFilter(django_filters.FilterSet):

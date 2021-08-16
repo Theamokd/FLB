@@ -77,10 +77,10 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "flb.users.apps.UsersConfig",
     # Your stuff: custom apps go here
-    "fuglelittbase.mainsite.apps.MainsiteConfig",
-    "fuglelittbase.literature.apps.LiteratureConfig",
-    "fuglelittbase.profiles.apps.ProfilesConfig",
-    "fuglelittbase.posts.apps.PostsConfig",
+    "flb.mainsite.apps.MainsiteConfig",
+    "flb.literature.apps.LiteratureConfig",
+    "flb.profiles.apps.ProfilesConfig",
+    "flb.posts.apps.PostsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

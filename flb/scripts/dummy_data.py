@@ -1,10 +1,11 @@
 from random import choice, randint, sample
 
 from faker import Faker
-from fuglelittbase.literature.models import Article, Author, Book, Issue, Journal
-from fuglelittbase.mainsite.models import Organization
-from fuglelittbase.posts.models import Post
 from taggit.models import Tag
+
+from flb.literature.models import Article, Author, Book, Issue, Journal
+from flb.mainsite.models import Organization
+from flb.posts.models import Post
 
 fake = Faker()
 

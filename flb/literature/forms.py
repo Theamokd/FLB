@@ -4,7 +4,8 @@ from crispy_forms.layout import Column, Div, Field, Fieldset, Layout, Row, Submi
 from django import forms
 from django.urls.base import reverse_lazy
 from django_select2 import forms as s2forms
-from fuglelittbase.literature.models import Article, Author, Issue, Journal
+
+from flb.literature.models import Article, Author, Issue, Journal
 
 from .custom_layout_object import Formset
 

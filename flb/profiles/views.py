@@ -1,7 +1,8 @@
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from fuglelittbase.literature.models import Journal
-from fuglelittbase.profiles.models import Profile
+
+from flb.literature.models import Journal
+from flb.profiles.models import Profile
 
 from .forms import ProfileForm
 

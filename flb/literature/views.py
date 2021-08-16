@@ -10,14 +10,8 @@ from extra_views import (
     InlineFormSetFactory,
     UpdateWithInlinesView,
 )
-from fuglelittbase.literature.models import (
-    Article,
-    Article_image,
-    Author,
-    Book,
-    Issue,
-    Journal,
-)
+
+from flb.literature.models import Article, Article_image, Author, Book, Issue, Journal
 
 from .filters import ArticleFilter, IssueFilter
 from .forms import ArticleForm, AuthorForm, IssueForm, MainSearchForm

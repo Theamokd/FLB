@@ -1,7 +1,8 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Div, Field, Layout, Submit
 from django import forms
-from fuglelittbase.profiles.models import Profile
+
+from flb.profiles.models import Profile
 
 
 class ProfileForm(forms.ModelForm):

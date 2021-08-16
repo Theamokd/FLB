@@ -1,7 +1,8 @@
 from django.views.generic.edit import FormView
-from fuglelittbase.literature.models import Article, Issue
-from fuglelittbase.posts.models import Post
 from literature.forms import MainSearchForm
+
+from flb.literature.models import Article, Issue
+from flb.posts.models import Post
 
 
 class HomeView(FormView):
