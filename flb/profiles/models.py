@@ -15,7 +15,7 @@ class Profile(models.Model):
         upload_to="profiles",
         blank=True,
         null=True,
-        default="defaults/default-journal.png",
+        default="files/defaults/default-profile.png",
     )
 
     user = models.OneToOneField(
