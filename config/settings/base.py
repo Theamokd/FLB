@@ -72,6 +72,7 @@ THIRD_PARTY_APPS = [
     "taggit",
     "django_select2",
     "django_filters",
+    "crispy_bootstrap5",
 ]
 
 LOCAL_APPS = [
@@ -196,7 +197,7 @@ TEMPLATES = [
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+# CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # FIXTURES
 # ------------------------------------------------------------------------------
@@ -277,3 +278,6 @@ SOCIALACCOUNT_ADAPTER = "flb.users.adapters.SocialAccountAdapter"
 # ------------------------------------------------------------------------------
 TAGGIT_CASE_INSENSITIVE = True
 SELECT2_CACHE_BACKEND = "default"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
