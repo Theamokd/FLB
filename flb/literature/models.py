@@ -51,13 +51,13 @@ class Book(models.Model):
     )
     f_cover = models.ImageField(
         _("The front cover image"),
-        upload_to="covers/",
+        upload_to="files/books/covers",
         blank=True,
         null=True,
-        default="defaults/default-journal.png",
+        default="files/defaults/default-journal.png",
     )
     b_cover = models.ImageField(
-        _("The back cover image"), upload_to="covers/", blank=True, null=True
+        _("The back cover image"), upload_to="files/books/covers", blank=True, null=True
     )
     volume = models.SmallIntegerField(_("Volume number"), blank=True, null=True)
     date = models.DateField(
@@ -154,13 +154,15 @@ class Journal(models.Model):
     )
     f_cover = models.ImageField(
         _("The front cover image"),
-        upload_to="covers/",
+        upload_to="files/journals/covers",
         blank=True,
-        null=True,
-        default="defaults/default-journal.png",
+        default="files/defaults/default-journal.png",
     )
     b_cover = models.ImageField(
-        _("The back cover image"), upload_to="covers/", blank=True, null=True
+        _("The back cover image"),
+        upload_to="files/journals/covers",
+        blank=True,
+        null=True,
     )
 
     custom_txt = models.CharField(_("Custom text"), max_length=350, blank=True)
@@ -263,13 +265,12 @@ class Issue(models.Model):
     )
     f_cover = models.ImageField(
         _("The front cover image"),
-        upload_to="covers/",
+        upload_to="files/issues/covers",
         blank=True,
-        null=True,
-        default="defaults/default-issue.png",
+        default="files/defaults/default-issue.png",
     )
     b_cover = models.ImageField(
-        _("The back cover image"), upload_to="covers/", blank=True, null=True
+        _("The back cover image"), upload_to="files/issues/covers", blank=True
     )
 
     custom_txt = models.CharField(_("Custom text"), max_length=350, blank=True)
